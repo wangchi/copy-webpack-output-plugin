@@ -10,7 +10,7 @@ npm i copy-webpack-output-plugin --save-dev
 ## Usage
 
 ```js
-const CopyWebpackOutputPlugin = require('./copy-webpack-output-plugin');
+const CopyWebpackOutputPlugin = require('copy-webpack-output-plugin');
 
 plugins: [
   new CopyWebpackOutputPlugin([{ src: '*.js', dest: 'foo' }], options)
@@ -25,8 +25,9 @@ See the [options document](https://github.com/isaacs/node-glob#options) for usag
 In this example, we will copy vendor files to cdn folder, copy js and css files to static folder.
 
 ```js
-const CopyWebpackOutputPlugin = require('./copy-webpack-output-plugin');
+const CopyWebpackOutputPlugin = require('copy-webpack-output-plugin');
 
+// Example 1
 module.exports = {
   //...
   plugins: [
@@ -46,6 +47,20 @@ module.exports = {
     ], {
       nodir: true
     })
+  ]
+}
+
+// Example 2
+// only copy html files to views folder
+module.exports = {
+  //...
+  plugins: [
+    new CopyWebpackOutputPlugin([
+      {
+        src: './dist/*.html',
+        dest: './views'
+      }
+    ])
   ]
 }
 ```

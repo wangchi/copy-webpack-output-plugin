@@ -41,9 +41,7 @@ class CopyWebpackOutputPlugin {
     compiler.hooks.done.tap('CopyWebpackOutputPlugin', () => {
       this.patterns.forEach(item => {
         copyPromise(item.src, item.dest, item.options).then(files => {
-          files.forEach(file => {
-            console.log('copy ' +  chalk.bold.green(item.src) + ' to ' + chalk.bold.green(item.dest) + ' success!');
-          });
+          console.log(chalk.bold.white('copy-webpack-output-plugin') + ' ' + chalk.bold.green('Copy Success!'));
         }).catch(err => {
           throw err;
         });
