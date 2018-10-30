@@ -1,6 +1,6 @@
 {
   "name": "copy-webpack-output-plugin",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "description": "A webpack plugin to copy your output files to somewhere",
   "main": "index.js",
   "scripts": {
