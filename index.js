@@ -21,6 +21,8 @@ class CopyWebpackOutputPlugin {
   constructor(patterns, options) {
     this.pluginName = 'copy-webpack-output-plugin';
 
+    patterns = typeof patterns === 'undefined' ? [] : patterns;
+
     if (typeof options !== 'undefined' && !isObj(options)) {
       console.log(chalk.red(this.pluginName) + ' options must be a object');
       return;
@@ -38,9 +40,20 @@ class CopyWebpackOutputPlugin {
   }
 
   apply(compiler) {
+    if (typeof compiler === 'undefined') {
+      this.copy(compiler);
+      return;
+    }
+
     compiler.hooks.done.tap('CopyWebpackOutputPlugin', () => {
-      this.patterns.forEach(item => {
-        copyPromise(item.src, item.dest, item.options).then(files => {
+      this.copy(compiler);
+    });
+  }
+
+  copy(compiler) {
+    this.patterns.forEach(item => {
+      copyPromise(item.src, item.dest, item.options).then(files => {
+        if (compiler) {
           console.log(
             'copy-webpack-output-plugin copy ' +
             chalk.bold.green(item.src) +
@@ -48,9 +61,9 @@ class CopyWebpackOutputPlugin {
             chalk.bold.green(item.dest) +
             ' success'
           );
-        }).catch(err => {
-          throw err;
-        });
+        }
+      }).catch(err => {
+        throw err;
       });
     });
   }
